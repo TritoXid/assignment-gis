@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<!-- Template by html.am -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="lib/jquery-ui.css">
+    <link rel="stylesheet" href="lib/leaflet.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+    <script type= "text/javascript" src= "lib/jquery-1.11.3.min.js"></script>
+    <script type= "text/javascript" src= "lib/jquery-ui.js"></script>
+    <script type= "text/javascript" src= "lib/leaflet.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
+    <script type= "text/javascript" src= "lib/jquery.geolocation.js"></script>
+
+    <title>CyclingMap</title>
+    <style type="text/css">
+        #map	{ width: 97%; height: 93%; display: inline-block; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            max-height: 100%;
+            font-family:Sans-serif;
+            line-height: 1.5em;
+        }
+
+        #header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            overflow: hidden; /* Disables scrollbars on the header frame. To enable scrollbars, change "hidden" to "scroll" */
+            background: #BCCE98;
+        }
+
+        #nav {
+            position: absolute;
+            top: 100px;
+            left: 0;
+            bottom: 0;
+            width: 230px;
+            overflow: auto; /* Scrollbars will appear on this frame only when there's enough content to require scrolling. To disable scrollbars, change to "hidden", or use "scroll" to enable permanent scrollbars */
+            background: #DAE9BC;
+        }
+
+        #logo {
+            padding:10px;
+        }
+
+        main {
+            position: fixed;
+            top: 100px; /* Set this to the height of the header */
+            left: 230px;
+            right: 0;
+            bottom: 0;
+            overflow: auto;
+            background: #fff;
+        }
+
+        .innertube {
+            margin: 15px; /* Provides padding for the content */
+        }
+
+        p {
+            color: #555;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul a {
+            color: darkblue;
+            text-decoration: none;
+        }
+
+        /*IE6 fix*/
+        * html body{
+            padding: 100px 0 0 230px; /* Set the first value to the height of the header and last value to the width of the nav */
+        }
+
+        * html main{
+            height: 100%;
+            width: 100%;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header id="header">
+    <div id="logo">
+        <p>
+            <h1><img src="img/bike-logo.png" style="width: 36px;height: 36px;">  CyclingMap Bratislava</h1>
+        </p>
+
+    </div>
+</header>
+
+<main>
+    <div class="innertube1" id="map">
+        <script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+        <link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' />
+
+        <script>
+        L.mapbox.accessToken = 'pk.eyJ1IjoidHJpdG94aWQiLCJhIjoiY2l1bGtvdW55MDAwajJ5bzB5MHMyN2dkbSJ9.MlmGprTqLhzKR-p8lgylIQ';
+        //var map = L.mapbox.map('map', 'tritoxid.1nij8lab').setView([48.1471, 17.1221], 13);
+        var map = L.mapbox.map('map', 'tritoxid.25l9n5l2').setView([48.1471, 17.1221], 13);
+        </script>
+
+    </div>
+</main>
+
+<nav id="nav">
+    <div class="innertube">
+        <form id="moznosti1">
+            <fieldset>
+                <legend>Vyber moznosti</legend>
+                <button type="button" id="allW" >Cyklotrasy</button>
+                <br/>
+                <button type="button" id="allP" >Parkoviska</button>
+                <br/>
+                <button type="button" id="allB" >Zastavky</button>
+                <br/>
+
+            </fieldset>
+        </form>
+
+        <form id="moznosti2">
+            <fieldset>
+                <legend>Okolie</legend>
+                <input type="checkbox" id = "ja"/> Ja
+                <br>
+                Zem. sirka: <input type="number" id = "lat" />
+                <br>
+                Zem. dlzka: <input type="number" id = "lon" />
+                <br>
+                Vzdialenost [m]: <input type="number" id = "dist" value = "1000" />
+                <br>
+                <input type="checkbox" id = "bike"/> Parkoviska
+                <br>
+                <input type="checkbox" id = "bus"/> Zastavky
+                <br>
+                <input type="checkbox" id = "trasa"/> Cyklotrasy
+                <br>
+                <button type="button" id="go" >GO</button>
+                <br/>
+                <button type="button" id="zelen" >Najblizsia zelen</button>
+                <br/>
+
+            </fieldset>
+        </form>
+
+        <form id="moznosti3">
+            <fieldset>
+                <legend>Legenda znaciek</legend>
+                <table>
+                    <tr>
+                        <th>Farba</th>
+                        <th>Popis</th>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#0000CD"></td>
+                        <td bgcolor="#DAE9BC">drinking_water</td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#1E90FF"></td>
+                        <td bgcolor="#DAE9BC">water_point</td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#00008B"></td>
+                        <td bgcolor="#DAE9BC">fountain</td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#00FF00"></td>
+                        <td bgcolor="#DAE9BC">bicycle_parking</td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#FF0000"></td>
+                        <td bgcolor="#DAE9BC">bench</td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#A0522D"></td>
+                        <td bgcolor="#DAE9BC">shelter</td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#FFFF00"></td>
+                        <td bgcolor="#DAE9BC">playground</td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#808000"></td>
+                        <td bgcolor="#DAE9BC">picnic_table</td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#FF4500"></td>
+                        <td bgcolor="#DAE9BC">firepit</td>
+                    </tr>
+                    <tr>
+                        <td bgcolor="#F5F5F5"></td>
+                        <td bgcolor="#DAE9BC">other</td>
+                    </tr>
+                </table>
+
+            </fieldset>
+        </form>
+
+    </div>
+</nav>
+
+<script>
+    var currentMarker;
+    $('#ja').on('change', function() {
+        var $self = $(this);
+        if ($self.is(':checked')) {
+            $.geolocation.getCurrentPosition(function(position) {
+                $('#lat').val(position.coords.latitude);
+                $('#lon').val(position.coords.longitude);
+                currentMarker = L.marker([position.coords.latitude, position.coords.longitude]).addTo(map);
+            });
+        }
+        else {
+            $('#lat').val('');
+            $('#lon').val('');
+            map.removeLayer(currentMarker);
+        }
+    });
+</script>
+
+
+<script>
+    var bikeParking;
+    $('#allP').on('click',function(){
+        $.ajax({
+            url:"http://localhost/api/bike-parking.php"
+        }).done(function(data){
+            bikeParking = L.mapbox.featureLayer($.parseJSON(data));
+            map.addLayer(bikeParking);
+
+            console.log("Bike Parking");
+        });
+    });
+</script>
+
+<script>
+    var busStop;
+    $('#allB').on('click',function(){
+        $.ajax({
+            url:"http://localhost/api/bike-bus.php"
+        }).done(function(data){
+            busStop = L.mapbox.featureLayer($.parseJSON(data));
+            map.addLayer(busStop);
+
+            console.log("Bus Stop");
+        });
+    });
+</script>
+
+<script>
+    var bikeWay;
+    $('#allW').on('click',function(){
+        $.ajax({
+            url:"http://localhost/api/bike-way.php"
+        }).done(function(data){
+            bikeWay = L.mapbox.featureLayer(JSON.parse(data));
+            map.addLayer(bikeWay);
+            console.log(bikeWay);
+        });
+    });
+</script>
+
+<script>
+    var circle;
+    var busStops;
+    var bikeParking;
+    var bikeTrasy;
+
+    $('#bike').on('change', function() {
+        var $self = $(this);
+        if ($self.is(':checked')) {
+            console.log("Bike checked");
+
+            $.ajax({
+                url:"http://localhost/api/bike-parking-dist.php",
+                data:{lat:$('#lat').val(),lon:$('#lon').val(),dist:$('#dist').val()}
+            }).done(function(data){
+                bikeParking = L.mapbox.featureLayer($.parseJSON(data));
+            });
+        }
+    });
+
+    $('#bus').on('change', function() {
+        var $self = $(this);
+        if ($self.is(':checked')) {
+            console.log("Bus checked");
+
+            $.ajax({
+                url:"http://localhost/api/bike-bus-dist.php",
+                data:{lat:$('#lat').val(),lon:$('#lon').val(),dist:$('#dist').val()}
+            }).done(function(data){
+                busStops = L.mapbox.featureLayer($.parseJSON(data));
+            });
+        }
+    });
+
+    $('#trasa').on('change', function() {
+        var $self = $(this);
+        if ($self.is(':checked')) {
+            console.log("Trasa checked");
+
+            $.ajax({
+                url:"http://localhost/api/bike-way-dist.php",
+                data:{lat:$('#lat').val(),lon:$('#lon').val(),dist:$('#dist').val()}
+            }).done(function(data){
+                bikeTrasy = L.mapbox.featureLayer(JSON.parse(data));
+            });
+        }
+    });
+
+    $('#go').on('click',function(){
+        if (circle != null)
+            map.removeLayer(circle);
+
+        circle = L.circle([$('#lat').val(), $('#lon').val()], $('#dist').val(), {
+            color: 'red',
+            fillColor: '#483D8B',
+            fillOpacity: 0.5
+        }).addTo(map);
+
+        if (busStops != null)
+            map.addLayer(busStops);
+        if (bikeParking != null)
+           map.addLayer(bikeParking);
+        if (bikeTrasy != null)
+            map.addLayer(bikeTrasy);
+    });
+</script>
+
+<script>
+    var popLocation;
+    map.on('click', function(e) {
+        if (popLocation) map.removeLayer(popLocation);
+        popLocation = e.latlng;
+        L.marker(popLocation).addTo(map);
+        $('#lat').val(e.latlng.lat);
+        $('#lon').val(e.latlng.lng);
+
+        $("#ja").attr("checked", false);
+        $("#bike").attr("checked", false);
+        $("#bus").attr("checked", false);
+        $("#trasa").attr("checked", false);
+    });
+</script>
+
+
+<script>
+    var zelenBike;
+    $('#zelen').on('click',function() {
+        $.ajax({
+            url:"http://localhost/api/bike-near.php",
+            data:{lat:$('#lat').val(),lon:$('#lon').val()}
+        }).done(function(data) {
+            if (zelenBike) map.removeLayer(zelenBike);
+            zelenBike = L.mapbox.featureLayer(JSON.parse(data));
+            map.addLayer(zelenBike);
+            console.log(zelenBike);
+        });
+    });
+
+</script>
+
+</body>
+</html>

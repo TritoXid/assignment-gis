@@ -1,0 +1,25 @@
+_prefs: 
+  mapid: 93tov.7bcfb8f6
+  saveCenter: true
+_properties: {}
+attribution: ''
+bounds: 
+  - -180
+  - -85.0511
+  - 180
+  - 85.0511
+center: 
+  - 17.1025
+  - 48.1399
+  - 16
+description: ''
+format: "png8:m=h"
+interactivity_layer: ''
+layers: null
+maxzoom: 20
+minzoom: 14
+name: styleBA
+source: "mapbox:///93tov.5887a783"
+styles: 
+  - style.mss
+template: ''

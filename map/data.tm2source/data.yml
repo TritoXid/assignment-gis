@@ -1,0 +1,510 @@
+_prefs: 
+  disabled: []
+  inspector: false
+  mapid: 93tov.5887a783
+  rev: s-6241f8b7
+  saveCenter: true
+attribution: ''
+center: 
+  - 17.124
+  - 48.1484
+  - 14
+description: ''
+Layer: 
+  - id: landuse
+    Datasource: 
+      dbname: sugarcube
+      extent: -180,-85.0511,180,85.0511
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: iheartrainbows44
+      port: 5432
+      srid: ''
+      table: |-
+        (
+          SELECT
+            osm_id,
+            way,
+            landuse AS CLASS
+          FROM
+            planet_osm_polygon
+          WHERE
+            landuse IS NOT NULL AND (way && !bbox!)
+        ) AS landuse
+      type: postgis
+      user: postgres
+    description: ''
+    fields: 
+      class: String
+      osm_id: Number
+    properties: 
+      "buffer-size": 4
+    srs: +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs
+  - id: waterway
+    Datasource: 
+      dbname: sugarcube
+      extent: -180,-85.0511,180,85.0511
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: iheartrainbows44
+      port: 5432
+      srid: ''
+      table: |-
+        (
+          SELECT
+            osm_id,
+            way
+          FROM
+            planet_osm_line
+          WHERE
+            waterway IS NOT NULL AND (way && !bbox!)
+        ) AS waterway
+      type: postgis
+      user: postgres
+    description: ''
+    fields: 
+      osm_id: Number
+    properties: 
+      "buffer-size": 4
+    srs: +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs
+  - id: water
+    Datasource: 
+      dbname: sugarcube
+      extent: -180,-85.0511,180,85.0511
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: iheartrainbows44
+      port: 5432
+      srid: ''
+      table: |-
+        (
+          SELECT
+            osm_id,
+            way
+          FROM
+            planet_osm_polygon
+          WHERE
+            "natural" = 'water' AND (way && !bbox!)
+        ) AS water
+      type: postgis
+      user: postgres
+    description: ''
+    fields: 
+      osm_id: Number
+    properties: 
+      "buffer-size": 8
+    srs: +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs
+  - id: tunnel
+    Datasource: 
+      dbname: sugarcube
+      extent: -180,-85.0511,180,85.0511
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: iheartrainbows44
+      port: 5432
+      srid: ''
+      table: |-
+        (
+          SELECT
+            osm_id,
+            way
+          FROM
+            planet_osm_line
+          WHERE
+            tunnel IS NOT NULL AND (way && !bbox!)
+        ) AS tunnel
+      type: postgis
+      user: postgres
+    description: ''
+    fields: 
+      osm_id: Number
+    properties: 
+      "buffer-size": 4
+    srs: +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs
+  - id: aeroway
+    Datasource: 
+      dbname: sugarcube
+      extent: -180,-85.0511,180,85.0511
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: iheartrainbows44
+      port: 5432
+      srid: ''
+      table: |-
+        (
+          SELECT
+            osm_id,
+            way
+          FROM
+            planet_osm_line
+          WHERE
+            aeroway IS NOT NULL AND (way && !bbox!)
+          
+          UNION ALL
+          
+          SELECT
+            osm_id,
+            way
+          FROM
+            planet_osm_polygon
+          WHERE
+            aeroway IS NOT NULL AND (way && !bbox!)
+        ) AS aeroway
+      type: postgis
+      user: postgres
+    description: ''
+    fields: 
+      osm_id: Number
+    properties: 
+      "buffer-size": 8
+    srs: +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs
+  - id: barrier_line
+    Datasource: 
+      dbname: sugarcube
+      extent: -180,-85.0511,180,85.0511
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: iheartrainbows44
+      port: 5432
+      srid: ''
+      table: |-
+        (
+          SELECT
+            osm_id,
+            way
+          FROM
+            planet_osm_line
+          WHERE
+            barrier IS NOT NULL AND (way && !bbox!)
+          
+          UNION ALL
+          
+          SELECT
+            osm_id,
+            way
+          FROM
+            planet_osm_polygon
+          WHERE
+            barrier IS NOT NULL AND (way && !bbox!)
+        ) AS barrier_line
+      type: postgis
+      user: postgres
+    description: ''
+    fields: 
+      osm_id: Number
+    properties: 
+      "buffer-size": 4
+    srs: +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs
+  - id: building
+    Datasource: 
+      dbname: sugarcube
+      extent: -180,-85.0511,180,85.0511
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: iheartrainbows44
+      port: 5432
+      srid: ''
+      table: |-
+        (
+          SELECT
+            osm_id,
+            way,
+            building,
+            amenity,
+            name
+          FROM
+            planet_osm_polygon
+          WHERE
+            building IS NOT NULL AND (way && !bbox!)
+        ) AS building
+      type: postgis
+      user: postgres
+    description: ''
+    fields: 
+      amenity: String
+      building: String
+      name: String
+      osm_id: Number
+    properties: 
+      "buffer-size": 2
+    srs: +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs
+  - id: road
+    Datasource: 
+      dbname: sugarcube
+      extent: -180,-85.0511,180,85.0511
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: iheartrainbows44
+      port: 5432
+      srid: ''
+      table: |-
+        (
+          SELECT
+            osm_id,
+            way
+          FROM
+            planet_osm_line
+          WHERE
+            highway IS NOT NULL AND (way && !bbox!)
+        ) AS road
+      type: postgis
+      user: postgres
+    description: ''
+    fields: 
+      osm_id: Number
+    properties: 
+      "buffer-size": 4
+    srs: +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs
+  - id: bridge
+    Datasource: 
+      dbname: sugarcube
+      extent: -180,-85.0511,180,85.0511
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: iheartrainbows44
+      port: 5432
+      srid: ''
+      table: |-
+        (
+          SELECT
+            osm_id,
+            way
+          FROM
+            planet_osm_line
+          WHERE
+            bridge IS NOT NULL AND (way && !bbox!)
+        ) AS bridge
+      type: postgis
+      user: postgres
+    description: ''
+    fields: 
+      osm_id: Number
+    properties: 
+      "buffer-size": 4
+    srs: +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs
+  - id: railway
+    Datasource: 
+      dbname: sugarcube
+      extent: -180,-85.0511,180,85.0511
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: iheartrainbows44
+      port: 5432
+      srid: ''
+      table: |-
+        (
+          SELECT
+            osm_id,
+            way,
+            railway AS CLASS
+          FROM
+            planet_osm_line
+          WHERE
+            railway IS NOT NULL AND (way && !bbox!)
+        ) AS railway
+      type: postgis
+      user: postgres
+    description: ''
+    fields: 
+      class: String
+      osm_id: Number
+    properties: 
+      "buffer-size": 4
+    srs: +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs
+  - id: administrative_level
+    Datasource: 
+      dbname: sugarcube
+      extent: -180,-85.0511,180,85.0511
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: iheartrainbows44
+      port: 5432
+      srid: ''
+      table: |-
+        (
+          SELECT
+            osm_id,
+            way,
+            admin_level
+          FROM
+            planet_osm_line
+          WHERE
+            admin_level IS NOT NULL
+        ) AS administrative_level
+      type: postgis
+      user: postgres
+    description: ''
+    fields: 
+      admin_level: String
+      osm_id: Number
+    properties: 
+      "buffer-size": 4
+    srs: +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs
+  - id: waterway_label
+    Datasource: 
+      dbname: sugarcube
+      extent: -180,-85.0511,180,85.0511
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: iheartrainbows44
+      port: 5432
+      srid: ''
+      table: |-
+        (
+          SELECT
+            osm_id,
+            way,
+            name
+          FROM
+            planet_osm_line
+          WHERE
+            name IS NOT NULL AND waterway IS NOT NULL AND (way && !bbox!)
+        ) AS waterway_label
+      type: postgis
+      user: postgres
+    description: ''
+    fields: 
+      name: String
+      osm_id: Number
+    properties: 
+      "buffer-size": 64
+    srs: +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs
+  - id: water_label
+    Datasource: 
+      dbname: sugarcube
+      extent: -180,-85.0511,180,85.0511
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: iheartrainbows44
+      port: 5432
+      srid: ''
+      table: |-
+        (
+          SELECT
+            osm_id,
+            way,
+            name
+          FROM
+            planet_osm_polygon
+          WHERE
+            name IS NOT NULL AND water IS NOT NULL AND (way && !bbox!)
+        ) AS water_label
+      type: postgis
+      user: postgres
+    description: ''
+    fields: 
+      name: String
+      osm_id: Number
+    properties: 
+      "buffer-size": 64
+    srs: +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs
+  - id: road_label
+    Datasource: 
+      dbname: sugarcube
+      extent: -180,-85.0511,180,85.0511
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: iheartrainbows44
+      port: 5432
+      srid: ''
+      table: |-
+        (
+          SELECT
+            osm_id,
+            way,
+            name
+          FROM
+            planet_osm_point
+          WHERE
+            name IS NOT NULL AND highway IS NOT NULL AND (way && !bbox!)
+          
+          UNION ALL
+          
+          SELECT
+            osm_id,
+            way,
+            name
+          FROM
+            planet_osm_line
+          WHERE
+            name IS NOT NULL AND highway IS NOT NULL AND (way && !bbox!)
+          
+          UNION ALL
+          
+          SELECT
+            osm_id,
+            way,
+            name
+          FROM
+            planet_osm_polygon
+          WHERE
+            name IS NOT NULL AND highway IS NOT NULL AND (way && !bbox!)
+        ) AS road_label
+      type: postgis
+      user: postgres
+    description: ''
+    fields: 
+      name: String
+      osm_id: Number
+    properties: 
+      "buffer-size": 64
+    srs: +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs
+maxzoom: 16
+minzoom: 14
+name: sourceBA

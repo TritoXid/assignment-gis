@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Map[]>
+<Map srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+
+<Parameters>
+  <Parameter name="center">17.124,48.1484,14</Parameter>
+  <Parameter name="format">pbf</Parameter>
+  <Parameter name="json"><![CDATA[{"vector_layers":[{"id":"landuse","description":"","fields":{"osm_id":"Number","class":"String"}},{"id":"waterway","description":"","fields":{"osm_id":"Number"}},{"id":"water","description":"","fields":{"osm_id":"Number"}},{"id":"tunnel","description":"","fields":{"osm_id":"Number"}},{"id":"aeroway","description":"","fields":{"osm_id":"Number"}},{"id":"barrier_line","description":"","fields":{"osm_id":"Number"}},{"id":"building","description":"","fields":{"osm_id":"Number","building":"String","amenity":"String","name":"String"}},{"id":"road","description":"","fields":{"osm_id":"Number"}},{"id":"bridge","description":"","fields":{"osm_id":"Number"}},{"id":"railway","description":"","fields":{"osm_id":"Number","class":"String"}},{"id":"administrative_level","description":"","fields":{"osm_id":"Number","admin_level":"String"}},{"id":"waterway_label","description":"","fields":{"osm_id":"Number","name":"String"}},{"id":"water_label","description":"","fields":{"osm_id":"Number","name":"String"}},{"id":"road_label","description":"","fields":{"osm_id":"Number","name":"String"}}]}]]></Parameter>
+  <Parameter name="maxzoom">16</Parameter>
+  <Parameter name="minzoom">14</Parameter>
+  <Parameter name="name"><![CDATA[sourceBA]]></Parameter>
+</Parameters>
+
+
+<Layer name="landuse"
+  buffer-size="4"
+  srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[sugarcube]]></Parameter>
+       <Parameter name="extent"><![CDATA[-180,-85.0511,180,85.0511]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[iheartrainbows44]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[(
+  SELECT
+    osm_id,
+    way,
+    landuse AS CLASS
+  FROM
+    planet_osm_polygon
+  WHERE
+    landuse IS NOT NULL AND (way && !bbox!)
+) AS landuse]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[postgres]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="waterway"
+  buffer-size="4"
+  srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[sugarcube]]></Parameter>
+       <Parameter name="extent"><![CDATA[-180,-85.0511,180,85.0511]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[iheartrainbows44]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[(
+  SELECT
+    osm_id,
+    way
+  FROM
+    planet_osm_line
+  WHERE
+    waterway IS NOT NULL AND (way && !bbox!)
+) AS waterway]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[postgres]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="water"
+  buffer-size="8"
+  srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[sugarcube]]></Parameter>
+       <Parameter name="extent"><![CDATA[-180,-85.0511,180,85.0511]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[iheartrainbows44]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[(
+  SELECT
+    osm_id,
+    way
+  FROM
+    planet_osm_polygon
+  WHERE
+    "natural" = 'water' AND (way && !bbox!)
+) AS water]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[postgres]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="tunnel"
+  buffer-size="4"
+  srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[sugarcube]]></Parameter>
+       <Parameter name="extent"><![CDATA[-180,-85.0511,180,85.0511]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[iheartrainbows44]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[(
+  SELECT
+    osm_id,
+    way
+  FROM
+    planet_osm_line
+  WHERE
+    tunnel IS NOT NULL AND (way && !bbox!)
+) AS tunnel]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[postgres]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="aeroway"
+  buffer-size="8"
+  srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[sugarcube]]></Parameter>
+       <Parameter name="extent"><![CDATA[-180,-85.0511,180,85.0511]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[iheartrainbows44]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[(
+  SELECT
+    osm_id,
+    way
+  FROM
+    planet_osm_line
+  WHERE
+    aeroway IS NOT NULL AND (way && !bbox!)
+  
+  UNION ALL
+  
+  SELECT
+    osm_id,
+    way
+  FROM
+    planet_osm_polygon
+  WHERE
+    aeroway IS NOT NULL AND (way && !bbox!)
+) AS aeroway]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[postgres]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="barrier_line"
+  buffer-size="4"
+  srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[sugarcube]]></Parameter>
+       <Parameter name="extent"><![CDATA[-180,-85.0511,180,85.0511]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[iheartrainbows44]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[(
+  SELECT
+    osm_id,
+    way
+  FROM
+    planet_osm_line
+  WHERE
+    barrier IS NOT NULL AND (way && !bbox!)
+  
+  UNION ALL
+  
+  SELECT
+    osm_id,
+    way
+  FROM
+    planet_osm_polygon
+  WHERE
+    barrier IS NOT NULL AND (way && !bbox!)
+) AS barrier_line]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[postgres]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="building"
+  buffer-size="2"
+  srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[sugarcube]]></Parameter>
+       <Parameter name="extent"><![CDATA[-180,-85.0511,180,85.0511]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[iheartrainbows44]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[(
+  SELECT
+    osm_id,
+    way,
+    building,
+    amenity,
+    name
+  FROM
+    planet_osm_polygon
+  WHERE
+    building IS NOT NULL AND (way && !bbox!)
+) AS building]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[postgres]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="road"
+  buffer-size="4"
+  srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[sugarcube]]></Parameter>
+       <Parameter name="extent"><![CDATA[-180,-85.0511,180,85.0511]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[iheartrainbows44]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[(
+  SELECT
+    osm_id,
+    way
+  FROM
+    planet_osm_line
+  WHERE
+    highway IS NOT NULL AND (way && !bbox!)
+) AS road]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[postgres]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="bridge"
+  buffer-size="4"
+  srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[sugarcube]]></Parameter>
+       <Parameter name="extent"><![CDATA[-180,-85.0511,180,85.0511]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[iheartrainbows44]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[(
+  SELECT
+    osm_id,
+    way
+  FROM
+    planet_osm_line
+  WHERE
+    bridge IS NOT NULL AND (way && !bbox!)
+) AS bridge]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[postgres]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="railway"
+  buffer-size="4"
+  srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[sugarcube]]></Parameter>
+       <Parameter name="extent"><![CDATA[-180,-85.0511,180,85.0511]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[iheartrainbows44]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[(
+  SELECT
+    osm_id,
+    way,
+    railway AS CLASS
+  FROM
+    planet_osm_line
+  WHERE
+    railway IS NOT NULL AND (way && !bbox!)
+) AS railway]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[postgres]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="administrative_level"
+  buffer-size="4"
+  srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[sugarcube]]></Parameter>
+       <Parameter name="extent"><![CDATA[-180,-85.0511,180,85.0511]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[iheartrainbows44]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[(
+  SELECT
+    osm_id,
+    way,
+    admin_level
+  FROM
+    planet_osm_line
+  WHERE
+    admin_level IS NOT NULL
+) AS administrative_level]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[postgres]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="waterway_label"
+  buffer-size="64"
+  srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[sugarcube]]></Parameter>
+       <Parameter name="extent"><![CDATA[-180,-85.0511,180,85.0511]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[iheartrainbows44]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[(
+  SELECT
+    osm_id,
+    way,
+    name
+  FROM
+    planet_osm_line
+  WHERE
+    name IS NOT NULL AND waterway IS NOT NULL AND (way && !bbox!)
+) AS waterway_label]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[postgres]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="water_label"
+  buffer-size="64"
+  srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[sugarcube]]></Parameter>
+       <Parameter name="extent"><![CDATA[-180,-85.0511,180,85.0511]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[iheartrainbows44]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[(
+  SELECT
+    osm_id,
+    way,
+    name
+  FROM
+    planet_osm_polygon
+  WHERE
+    name IS NOT NULL AND water IS NOT NULL AND (way && !bbox!)
+) AS water_label]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[postgres]]></Parameter>
+    </Datasource>
+  </Layer>
+
+<Layer name="road_label"
+  buffer-size="64"
+  srs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs">
+    
+    <Datasource>
+       <Parameter name="dbname"><![CDATA[sugarcube]]></Parameter>
+       <Parameter name="extent"><![CDATA[-180,-85.0511,180,85.0511]]></Parameter>
+       <Parameter name="geometry_field"><![CDATA[]]></Parameter>
+       <Parameter name="geometry_table"><![CDATA[]]></Parameter>
+       <Parameter name="host"><![CDATA[localhost]]></Parameter>
+       <Parameter name="key_field"><![CDATA[]]></Parameter>
+       <Parameter name="key_field_as_attribute"><![CDATA[]]></Parameter>
+       <Parameter name="max_size"><![CDATA[512]]></Parameter>
+       <Parameter name="password"><![CDATA[iheartrainbows44]]></Parameter>
+       <Parameter name="port"><![CDATA[5432]]></Parameter>
+       <Parameter name="srid"><![CDATA[]]></Parameter>
+       <Parameter name="table"><![CDATA[(
+  SELECT
+    osm_id,
+    way,
+    name
+  FROM
+    planet_osm_point
+  WHERE
+    name IS NOT NULL AND highway IS NOT NULL AND (way && !bbox!)
+  
+  UNION ALL
+  
+  SELECT
+    osm_id,
+    way,
+    name
+  FROM
+    planet_osm_line
+  WHERE
+    name IS NOT NULL AND highway IS NOT NULL AND (way && !bbox!)
+  
+  UNION ALL
+  
+  SELECT
+    osm_id,
+    way,
+    name
+  FROM
+    planet_osm_polygon
+  WHERE
+    name IS NOT NULL AND highway IS NOT NULL AND (way && !bbox!)
+) AS road_label]]></Parameter>
+       <Parameter name="type"><![CDATA[postgis]]></Parameter>
+       <Parameter name="user"><![CDATA[postgres]]></Parameter>
+    </Datasource>
+  </Layer>
+
+</Map>

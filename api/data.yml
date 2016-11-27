@@ -1,0 +1,53 @@
+_prefs: 
+  disabled: []
+  inspector: false
+  mapid: ''
+  rev: ''
+  saveCenter: true
+attribution: ''
+center: 
+  - 17.1201
+  - 48.1545
+  - 12
+description: ''
+Layer: 
+  - id: bratislava
+    Datasource: 
+      dbname: bratislava
+      extent: -180,-85.0511,180,85.0511
+      geometry_field: ''
+      geometry_table: ''
+      host: localhost
+      key_field: ''
+      key_field_as_attribute: ''
+      max_size: 512
+      password: postgres
+      port: 5432
+      srid: ''
+      table: |-
+        (
+                  SELECT
+                    osm_id,
+                    way,
+                    building,
+                    amenity,
+                    name
+                  FROM
+                    planet_osm_polygon
+                  WHERE
+                    building IS NOT NULL AND (way && !bbox!)
+                ) AS building
+      type: postgis
+      user: postgres
+    description: cyklomapa
+    fields: 
+      amenity: String
+      building: String
+      name: String
+      osm_id: Number
+    properties: 
+      "buffer-size": 8
+    srs: +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs
+maxzoom: 14
+minzoom: 5
+name: ''
