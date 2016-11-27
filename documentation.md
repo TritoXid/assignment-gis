@@ -10,7 +10,7 @@
 * Zobraziť stojany, zastavky a cyklotrasy vo zvloneom okolí 
 * Zobraziť 5 najbližších parkov od určeného miesta v ktorých sa nachádza pitná voda, stojan, lavicka, atď. 
 
-![frontend.PNG](frontend.PNG)
+![frontend.png](frontend.png)
 
 **Dáta:** Mesto Bratislava z [Open Street Maps](https://www.openstreetmap.org/).
 
@@ -24,7 +24,7 @@ V aplikácii sú tiež použité Javascript a jQuery.
 * *Beckend* pozostáva z PHP, ktoré sa stará o komunikáciu s databázou a tiež vykonáva potrebné query nad databázou.
 Na komunikáciu frontedu s beckendom je použitý ajax.
 
-* *Databáza* je použitá [PostgreSQL](https://www.postgresql.org/) s rozšítením [PostGIS](http://postgis.net/).
+* *Databáza* je použitá [PostgreSQL](https://www.postgresql.org/) s rozšírením [PostGIS](http://postgis.net/).
 
 
 **API** 
@@ -36,11 +36,11 @@ http://localhost/api/bike-parking-dist.php?lat=48.1584103&lon=17.0644564&dist=10
 
 Výsledkom sú dáta uložené v [GeoJSON](http://geojson.org/) formáte.
 
-![geojson.PNG](geojson.PNG)
+![geojson.png](geojson.png)
 
 
 **Obrázky** 
 
-![1.PNG](1.PNG)
+![1.png](1.png)
 
-![2.PNG](2.PNG)
+![2.png](2.png)
